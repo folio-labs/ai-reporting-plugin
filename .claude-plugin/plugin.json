@@ -1,0 +1,8 @@
+{
+  "name": "folio-reports",
+  "description": "FOLIO Reporting Plugin",
+  "version": "1.0.0",
+  "author": {
+    "name": "Jeremy Nelson"
+  }
+}
