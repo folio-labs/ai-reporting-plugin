@@ -186,6 +186,13 @@ def main() -> None:
     print(f"Fetching {len(sp_ids)} unique service points...")
     service_points = fetch_service_points_by_ids(fc, sp_ids)
 
+    subjects = {}
+    for iid, inst in instances.items():
+        subj_list = inst.get("subjects")
+        if subj_list:
+            first = subj_list[0]
+            subjects[iid] = first["value"] if isinstance(first, dict) else first
+
     rows = build_report_rows(logs, instances, service_points, subjects)
 
     timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
