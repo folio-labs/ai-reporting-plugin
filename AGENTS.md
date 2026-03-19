@@ -1,10 +1,10 @@
-# Project Mandates: SUL AI FOLIO Reporting
+# Project Mandates: AI FOLIO Reporting
 
-This document defines the foundational mandates, architectural patterns, and development standards for the SUL AI FOLIO Reporting project. These instructions take absolute precedence over general defaults.
+This document defines the foundational mandates, architectural patterns, and development standards for the SULFOLIO Reporting project. These instructions take absolute precedence over general defaults.
 
 ## Purpose
 
-This project helps Stanford University Libraries (SUL) staff generate custom circulation and inventory reports from FOLIO using AI coding assistants (Claude Code, Google Gemini CLI, OpenAI Codex). Staff describe the report they need in plain language; the agent writes and runs Python code against the FOLIO APIs.
+This project helps lirary staff generate custom circulation and inventory reports from FOLIO using AI coding assistants (Claude Code, Google Gemini CLI, OpenAI Codex). Staff describe the report they need in plain language; the agent writes and runs Python code against the FOLIO APIs.
 
 ## Core Principles
 
