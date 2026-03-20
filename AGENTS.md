@@ -68,6 +68,23 @@ To ensure accuracy when multiple AI agents (Claude Code, Gemini CLI, Codex) coor
 3. **Result Comparison:** If two agents generate the same report independently, their outputs must be bit-for-bit identical or reconcilable (e.g., if timestamps or row order differ).
 4. **Verification Logs:** After a report is generated and verified, append a note to `reports/VERIFICATIONS.md` (git-ignored) with the report filename, the agents involved, and the verification outcome.
 
+## Agent Roles
+
+| Agent | Tool | Role |
+|-------|------|------|
+| Director | Claude Code | Receives staff requests, assigns tasks, synthesizes results |
+| Reporter | Gemini CLI | Runs skill scripts, returns output filename + summary |
+| Verifier | OpenAI Codex | Reviews report logic, runs verification scripts, logs to `reports/VERIFICATIONS.md` |
+
+### Handoff Protocol
+
+Agents communicate via files in `handoff/`. See `handoff/PROTOCOL.md` for the full spec.
+
+- `handoff/reporter.md` — Director → Reporter task queue
+- `handoff/verifier.md` — Director → Verifier task queue
+
+Each file uses YAML frontmatter (`task_id`, `status`, `updated`) and two sections: `## Task` and `## Response`. Status lifecycle: `IDLE → PENDING → IN_PROGRESS → DONE|FAILED`.
+
 ## Documentation
 
 - Keep `README.md` updated with setup instructions and high-level architecture.
