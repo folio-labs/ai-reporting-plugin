@@ -11,6 +11,12 @@ generate custom circulation and inventory reports by querying FOLIO APIs.
 - Python 3.12+
 - Access to a FOLIO instance (URL, tenant, username, password)
 
+## AI Coding Assistance
+To use this repository, you'll need to install at least one of the following:
+- **Claude Code** - `curl -fsSL https://claude.ai/install.sh | bash`, Powershell `irm https://claude.ai/install.ps1 | iex`
+- **Google Gemini CLI** - `npm install -g @google/gemini-cli`
+- **Open AI Codex CLI** - `npm i -g @openai/codex`
+
 ## Setup
 
 1. **Install dependencies**
@@ -51,6 +57,7 @@ Open this repository in your preferred AI coding assistant and describe the repo
 - *"Export a CSV of active holds for the Main Library."*
 
 The assistant will query the FOLIO Inventory and Circulation APIs using the `FolioClient` in `folio_client.py`.
+
 
 ## Project Structure
 

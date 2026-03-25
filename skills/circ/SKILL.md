@@ -13,14 +13,13 @@ Greet the user named "$ARGUMENTS" warmly and ask what kind of report you can hel
 Fetches the 50 most recent checkout events from the FOLIO circulation audit log and produces:
 - A CSV saved to `reports/checkouts_<timestamp>.csv`
 - Columns: `title`, `timestamp`, `service_point`, `main_subject`
-- Uses Claude (Haiku) to classify the main subject for each checked-out item
 
 **Usage:**
 ```bash
 uv run skills/circ/checkout_report.py
 ```
 
-**Requirements:** `.env` with `FOLIO_*` and `ANTHROPIC_API_KEY` credentials.
+**Requirements:** `.env` with `FOLIO_*` credentials.
 
 ---
 

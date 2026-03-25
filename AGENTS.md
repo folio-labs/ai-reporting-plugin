@@ -1,10 +1,14 @@
 # Project Mandates: AI FOLIO Reporting
 
-This document defines the foundational mandates, architectural patterns, and development standards for the SULFOLIO Reporting project. These instructions take absolute precedence over general defaults.
+This document defines the foundational mandates, architectural patterns, and development 
+standards for the FOLIO Reporting project. These instructions take absolute precedence over general defaults.
 
 ## Purpose
 
-This project helps lirary staff generate custom circulation and inventory reports from FOLIO using AI coding assistants (Claude Code, Google Gemini CLI, OpenAI Codex). Staff describe the report they need in plain language; the agent writes and runs Python code against the FOLIO APIs.
+This project helps library staff generate custom circulation and inventory reports from 
+FOLIO using AI coding assistants (Claude Code, Google Gemini CLI, OpenAI Codex). Staff 
+describe the report they need in plain language; the agent writes and runs Python code 
+against the FOLIO APIs.
 
 ## Core Principles
 
@@ -78,7 +82,8 @@ To ensure accuracy when multiple AI agents (Claude Code, Gemini CLI, Codex) coor
 
 ### Handoff Protocol
 
-Agents communicate via files in `handoff/`. See `handoff/PROTOCOL.md` for the full spec.
+Agents using different models communicate via files in `handoff/`. See `handoff/PROTOCOL.md` for 
+the full spec.
 
 - `handoff/reporter.md` — Director → Reporter task queue
 - `handoff/verifier.md` — Director → Verifier task queue

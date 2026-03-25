@@ -8,7 +8,9 @@
       "Bash(uv run:*)",
       "Bash(PYTHONPATH=\".\" uv run skills/circ/checkout_report.py)",
       "Bash(PYTHONPATH=\".\" uv run skills/circ/verify_checkout_report.py)",
-      "WebFetch(domain:dev.bcld.info)"
+      "WebFetch(domain:dev.bcld.info)",
+      "Bash(PYTHONPATH=\".\" uv run python handoff/fetch_titles.py)",
+      "Bash(PYTHONPATH=\".\" uv run python handoff/search_bluecore.py)"
     ]
   }
 }
