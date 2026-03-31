@@ -1,4 +1,4 @@
-# SUL AI FOLIO Reporting
+# AI FOLIO Reporting
 
 AI-assisted circulation reporting for library staff using the FOLIO library services platform.
 
