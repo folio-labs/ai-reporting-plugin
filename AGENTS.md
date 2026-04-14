@@ -53,6 +53,7 @@ The `.env` file is git-ignored and must never be committed.
 - Key endpoints:
   - Inventory: `/inventory/items`, `/inventory/instances`, `/inventory/holdings-storage/holdings`
   - Circulation: `/circulation/loans`, `/circulation/requests`
+  - Audit log: `/audit-data/circulation/logs` — use `action=="Checked out"` with a `date>="<ISO8601>"` filter and `folio_get_all` for paginated date-range retrieval
   - Users: `/users` (avoid fetching PII fields unless strictly necessary)
 
 ## Reporting Outputs

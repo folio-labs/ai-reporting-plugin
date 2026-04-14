@@ -1,18 +1,19 @@
-"""Generate a CSV report of the 50 most recent checkout events.
+"""Generate a CSV report of checkout events within a date range.
 
 Columns: title, timestamp, service_point, main_subject
 
 Usage:
-    uv run checkout_report.py
+    uv run checkout_report.py [--days N]
+
+    Defaults to --days 4 (past four days).
 
 Requires:
     - reports/ directory is created automatically
 """
 
+import argparse
 import csv
-import json
-import os
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -21,8 +22,8 @@ from folio_client import get_client
 
 load_dotenv()
 
-CHECKOUT_LIMIT = 50
 REPORTS_DIR = Path("reports")
+PAGE_SIZE = 500
 
 
 # ---------------------------------------------------------------------------
@@ -30,26 +31,26 @@ REPORTS_DIR = Path("reports")
 # ---------------------------------------------------------------------------
 
 
-def fetch_checkout_logs(fc, limit: int = CHECKOUT_LIMIT) -> list[dict]:
-    """Fetch the most recent checkout log entries from the circulation audit log.
+def fetch_checkout_logs(fc, since: datetime) -> list[dict]:
+    """Fetch all checkout log entries on or after `since` from the audit log.
 
     Args:
         fc: Authenticated FolioClient instance.
-        limit: Maximum number of records to return.
+        since: UTC datetime representing the earliest checkout to include.
 
     Returns:
         List of log record dicts.
     """
-    result = fc.folio_get(
-        "/audit-data/circulation/logs",
-        key="logRecords",
-        query_params={
-            "query": 'action=="Checked out"',
-            "limit": limit,
-            "offset": 0,
-        },
+    cutoff = since.strftime("%Y-%m-%dT%H:%M:%S.000Z")
+    query = f'action=="Checked out" and date>="{cutoff}"'
+    return list(
+        fc.folio_get_all(
+            "/audit-data/circulation/logs",
+            key="logRecords",
+            query=query,
+            limit=PAGE_SIZE,
+        )
     )
-    return result or []
 
 
 def fetch_instances_by_ids(fc, instance_ids: set[str]) -> dict[str, dict]:
@@ -164,10 +165,17 @@ def write_csv(rows: list[dict], output_path: Path) -> None:
 
 def main() -> None:
     """Run the checkout report pipeline."""
+    parser = argparse.ArgumentParser(description="Report checkouts from the past N days.")
+    parser.add_argument("--days", type=int, default=4, help="Number of days to look back (default: 4)")
+    args = parser.parse_args()
+
+    now = datetime.now(timezone.utc)
+    since = now - timedelta(days=args.days)
+    print(f"Fetching checkouts since {since.date()} (past {args.days} days)...")
+
     fc = get_client()
 
-    print(f"Fetching up to {CHECKOUT_LIMIT} checkout log entries...")
-    logs = fetch_checkout_logs(fc, limit=CHECKOUT_LIMIT)
+    logs = fetch_checkout_logs(fc, since)
     print(f"  Retrieved {len(logs)} log entries.")
 
     # Collect unique IDs for batch lookups
@@ -195,8 +203,8 @@ def main() -> None:
 
     rows = build_report_rows(logs, instances, service_points, subjects)
 
-    timestamp = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
-    output_path = REPORTS_DIR / f"checkouts_{timestamp}.csv"
+    timestamp = now.strftime("%Y%m%d_%H%M%S")
+    output_path = REPORTS_DIR / f"checkouts_last{args.days}days_{timestamp}.csv"
     write_csv(rows, output_path)
 
     print(f"Report written: {output_path}  ({len(rows)} rows)")
