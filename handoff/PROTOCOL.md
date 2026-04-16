@@ -60,9 +60,9 @@ updated: 2026-03-19T14:30:00Z
 
 ## Task
 
-Run the checkout report.
+Run the checkout report for the past four days.
 
-    uv run skills/circ/checkout_report.py
+    PYTHONPATH=. uv run python skills/circ/checkout_report.py --days 4
 
 Report back the output filename, row count, and any printed summary.
 
