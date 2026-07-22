@@ -1,4 +1,5 @@
 ---
+name: acquisition
 description: Reporting on FOLIO Invoices, Purchase Orders, Purchase Order Lines, and Vendors
 ---
 
