@@ -1,4 +1,5 @@
 ---
+name: inventory
 description: Reporting on FOLIO Instances, Holdings, and Items including external MARC and BIBFRAME sources
 ---
 
